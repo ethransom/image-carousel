@@ -23,7 +23,7 @@ body {
   /* margin: 2vh 5vw 1vh 5vw; */
   padding: 0;
   width: 100vw;
-  /* height: 80vh; */
+  max-height: 75vh;
   margin-top: 4vh;
   margin-bottom: 4vh;
   flex: 1;
