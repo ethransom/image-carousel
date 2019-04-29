@@ -19,14 +19,6 @@ export default class App extends React.Component {
     document.removeEventListener("keydown", this.onKeyPress);
   }
 
-  private onImageLoad = (): any => null;
-
-  private awaitImageLoad() {
-    return new Promise(resolve => {
-      this.onImageLoad = resolve;
-    });
-  }
-
   private onKeyPress = (ev: KeyboardEvent) => {
     if (ev.key === "ArrowLeft") {
       this.switchImage("prev");
@@ -69,15 +61,11 @@ export default class App extends React.Component {
     }
 
     // make sure that opacity is set in a different tick than the image source attr
-    setTimeout(
-      () =>
-        this.setState({
-          targetOpacity: 1
-        }),
-      50
-    );
-    // wait for image load
-    // await this.awaitImageLoad();
+    await waitFor(50);
+
+    this.setState({
+      targetOpacity: 1
+    });
 
     await waitFor(300); // let CSS animate in the new image
 
@@ -104,20 +92,7 @@ export default class App extends React.Component {
               }}
               src={img.src}
               className="carouselImg"
-              alt="logo"
             />
-            {/* {this.state.images.map((image, i) => (
-              <img
-                key={image.src}
-                style={{
-                  display: this.state.imageIndex === i ? "inherit" : "none",
-                  opacity: this.state.targetOpacity
-                }}
-                src={image.src}
-                className="carouselImg"
-                alt="logo"
-              />
-            ))} */}
             <button
               onClick={() => this.switchImage("next")}
               className="control"
@@ -130,7 +105,6 @@ export default class App extends React.Component {
               style={{
                 display: "flex",
                 flexDirection: "row"
-                // justifyContent: "space-between"
               }}
             >
               {this.state.images.map((img, i) => (
@@ -157,14 +131,6 @@ export default class App extends React.Component {
               </a>
             </p>
           </nav>
-          {/* <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a> */}
         </header>
       </div>
     );
